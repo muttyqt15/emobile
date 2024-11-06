@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 
 class MyHomePage extends StatelessWidget  {
   MyHomePage({super.key});
-
-  final String npm = '2306207101';
-  final String name = 'Muttaqin';
-  final String pbp_class = 'PBP A';
+  final String name = 'Harman';
+  final String pbpClass = 'PBP A';
 
   final List<ItemHomepage> items = [
     ItemHomepage("Lihat Daftar Produk", Icons.mood, Colors.deepPurpleAccent),
@@ -20,7 +18,7 @@ class MyHomePage extends StatelessWidget  {
       // AppBar adalah bagian atas halaman yang menampilkan judul.
       appBar: AppBar(
         title: const Text(
-          'E Mobile',
+          'Ecommerce',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -40,9 +38,8 @@ class MyHomePage extends StatelessWidget  {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                InfoCard(title: 'NPM', content: npm),
                 InfoCard(title: 'Name', content: name),
-                InfoCard(title: 'Class', content: pbp_class),
+                InfoCard(title: 'Class', content: pbpClass),
               ],
             ),
 
@@ -59,7 +56,7 @@ class MyHomePage extends StatelessWidget  {
                   const Padding(
                     padding: EdgeInsets.only(top: 16.0),
                     child: Text(
-                      'Welcome to E Mobile',
+                      'Welcome to Ecommerce',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0,
