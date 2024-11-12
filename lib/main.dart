@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:emobile/menu.dart';
+import 'package:emobile/screens/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Page',
+      title: '2306207101',
       theme: ThemeData(
         // This is the theme of your application.
         //
