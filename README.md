@@ -1,4 +1,93 @@
 # E-Mobile
+### Tugas 8
+
+## 1. Kegunaan `const` di Flutter
+`const` digunakan dalam Flutter untuk membuat objek yang bersifat konstan atau immutable. Objek yang dideklarasikan dengan `const` tidak dapat diubah setelah diinisialisasi, sehingga dapat mempercepat performa aplikasi karena Flutter dapat menghindari rekonstruksi objek yang tidak berubah. Ini sangat berguna pada widget yang tidak berubah, seperti teks atau ikon statis.
+
+### Keuntungan Menggunakan `const` pada Flutter
+- **Efisiensi Memori:** `const` membantu menghemat memori dengan menghindari pembuatan ulang objek yang sama berkali-kali.
+- **Optimasi Render:** Dengan menggunakan `const`, Flutter tidak perlu melakukan proses rebuild untuk elemen yang tidak berubah, sehingga mempercepat rendering.
+- **Membantu Pembacaan Kode:** Membuat kode lebih mudah dibaca dan dipahami karena nilai yang ditetapkan sebagai `const` menunjukkan bahwa nilai tersebut tidak akan berubah.
+
+### Kapan Sebaiknya Menggunakan `const`
+- Gunakan `const` untuk widget atau nilai yang tidak akan berubah selama aplikasi berjalan, seperti `Text`, `Icon`, atau widget statis lainnya.
+- Untuk elemen yang tidak terpengaruh oleh data dinamis atau user input, `const` cocok digunakan.
+
+### Kapan Sebaiknya Tidak Menggunakan `const`
+- Hindari `const` untuk elemen yang perlu memperbarui tampilan sesuai perubahan data atau state, karena elemen tersebut perlu di-render ulang.
+
+## 2. Penggunaan `Column` dan `Row` di Flutter
+- **Column**: Widget ini digunakan untuk menampilkan widget secara vertikal (ke bawah). Biasa digunakan untuk membuat layout dengan elemen-elemen yang tersusun ke bawah.
+- **Row**: Widget ini digunakan untuk menampilkan widget secara horizontal (ke samping). Digunakan untuk menyusun elemen-elemen yang berjejer secara mendatar.
+
+### Contoh Implementasi `Column` dan `Row`
+
+```dart
+// Contoh penggunaan Column
+Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Text("Item 1"),
+    Text("Item 2"),
+    Text("Item 3"),
+  ],
+)
+
+// Contoh penggunaan Row
+Row(
+  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  children: [
+    Icon(Icons.home),
+    Icon(Icons.search),
+    Icon(Icons.person),
+  ],
+)
+```
+
+## 3. Elemen Input pada Halaman Form
+Pada tugas kali ini, elemen input yang digunakan adalah:
+- **TextField**: untuk input teks seperti nama atau alamat email.
+
+### Elemen Input Flutter yang Tidak Digunakan
+- **Slider**: digunakan untuk memilih nilai dalam rentang tertentu.
+- **Switch**: untuk toggle antara dua opsi (misalnya on/off).
+- **DatePicker**: untuk memilih tanggal.
+
+Elemen-elemen ini tidak digunakan pada tugas ini karena tidak relevan dengan kebutuhan form yang dibuat.
+
+## 4. Mengatur Tema (Theme) dalam Aplikasi Flutter
+Dalam Flutter, tema dapat diatur secara global dengan `ThemeData` di dalam `MaterialApp`. Ini membuat tampilan aplikasi lebih konsisten dengan warna, font, dan style yang seragam di seluruh aplikasi.
+
+### Contoh Implementasi Tema
+```dart
+MaterialApp(
+  theme: ThemeData(
+    primaryColor: Colors.blue,
+    accentColor: Colors.amber,
+    textTheme: TextTheme(
+      bodyText1: TextStyle(fontSize: 16.0, color: Colors.black),
+    ),
+  ),
+  home: MyHomePage(),
+);
+```
+Tema memungkinkan komponen Flutter menggunakan style default dari `ThemeData` sehingga tampilan aplikasi menjadi konsisten. Pada aplikasi yang dibuat, tema ini dapat diterapkan untuk konsistensi warna, ukuran font, dan gaya komponen.
+
+## 5. Menangani Navigasi dalam Aplikasi Flutter dengan Banyak Halaman
+Untuk menangani navigasi pada aplikasi dengan banyak halaman, Flutter menyediakan widget `Navigator` yang bekerja dengan metode `push` dan `pop`. Setiap kali kita ingin membuka halaman baru, kita bisa menggunakan `Navigator.push`, dan untuk kembali ke halaman sebelumnya menggunakan `Navigator.pop`.
+
+### Contoh Navigasi
+```dart
+// Navigasi ke halaman baru
+Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => HalamanBaru()),
+);
+
+// Kembali ke halaman sebelumnya
+Navigator.pop(context);
+```
+
 
 ### Tugas 7
 
