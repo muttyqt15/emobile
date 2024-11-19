@@ -1,4 +1,91 @@
 # E-Mobile
+### Tugas 9
+
+# README.md
+
+#### a. Mengapa Kita Perlu Membuat Model untuk Mengambil/Mengirim Data JSON?
+Model diperlukan untuk mendefinisikan struktur data secara eksplisit. Tanpa model, data tidak akan divalidasi, yang dapat menyebabkan error atau data yang tidak konsisten.
+
+#### b. Apakah Akan Terjadi Error Jika Tidak Membuat Model Terlebih Dahulu?
+Error mungkin tidak langsung terjadi, tetapi data yang tidak terstruktur dapat menyebabkan aplikasi menjadi tidak dapat digunakan karena tidak adanya validasi atau penyimpanan data yang sesuai.
+
+#### c. Fungsi Library `http`
+Library `http` digunakan untuk mengirimkan request HTTP ke server Django. Misalnya, library ini digunakan untuk mengambil daftar item, mengirimkan data registrasi, atau melakukan autentikasi login.
+
+#### d. Fungsi `CookieRequest`
+`CookieRequest` digunakan untuk menyimpan sesi pengguna, seperti cookie untuk autentikasi. Instance ini dibagikan ke semua komponen agar Flutter dapat mengakses status autentikasi pengguna dengan mudah.
+
+#### e. Mekanisme Pengiriman Data
+1. Pengguna memasukkan data di Flutter.
+2. Data dikirim melalui `http.post()` ke endpoint Django.
+3. Django memvalidasi data dan menyimpannya ke database.
+4. Django mengembalikan respons JSON ke Flutter.
+5. Flutter memproses respons dan menampilkan data ke pengguna.
+
+#### f. Mekanisme Autentikasi
+1. **Login**: Flutter mengirim email dan password ke endpoint Django. Jika valid, cookie sesi disimpan di Flutter.
+2. **Register**: Data pengguna dikirim ke endpoint registrasi Django untuk disimpan di database.
+3. **Logout**: Flutter mengirim permintaan logout ke Django, yang menghapus cookie sesi.
+
+#### g. Step-by-Step Implementasi
+### 5. Membuat Halaman Daftar Item
+Flutter menampilkan daftar item dengan memanfaatkan endpoint JSON Django. Data ditampilkan menggunakan `FutureBuilder` dan ditata dalam `GridView`. Atribut `name`, `price`, dan `description` ditampilkan pada setiap kartu item.
+
+### 6. Membuat Halaman Detail Item
+Setiap kartu pada halaman daftar item dapat ditekan untuk membuka halaman detail. Semua atribut dari model item ditampilkan di halaman ini. Tombol "Kembali" memungkinkan pengguna untuk kembali ke daftar item.
+
+### 7. Filter Item Berdasarkan Pengguna yang Login
+Halaman daftar item difilter untuk menampilkan hanya item yang dibuat oleh pengguna yang sedang login. Django menyaring data menggunakan `request.user`.
+
+```python
+def show_json(req):
+    data = Product.objects.filter(user=req.user)
+    return HttpResponse(
+        serializers.serialize("json", data), content_type="application/json"
+    )
+```
+
+1. **Registrasi Akun**:
+   - Buat model pengguna di Django (bawaan Django).
+   - Implementasikan endpoint registrasi `/auth/register/` di Django.
+   - Tambahkan halaman registrasi `register.dart` di Flutter.
+
+   Halaman registrasi akun dibuat menggunakan `TextFormField` untuk input data pengguna seperti nama, email, dan password. Data dikirimkan ke backend Django melalui endpoint API menggunakan library `http`. Django memvalidasi data dan menyimpan pengguna baru ke database.
+
+2. **Login**:
+   - Implementasikan endpoint login `/auth/login` di Django.
+   - Buat halaman login `login.dart` di Flutter.
+
+   Halaman login menggunakan `TextFormField` untuk email dan password. Setelah pengguna mengisi data, aplikasi mengirimkan request ke endpoint login Django. Jika berhasil, aplikasi menyimpan session menggunakan `CookieRequest`.
+
+3. **Autentikasi dan Session**:
+   - Gunakan `CookieRequest` untuk menyimpan sesi.
+   - Tambahkan logika autentikasi di setiap halaman Flutter.
+
+   Sistem autentikasi memanfaatkan Django untuk login, register, dan logout. Cookie disimpan di sisi klien menggunakan `CookieRequest`, memungkinkan autentikasi berbasis sesi di Flutter.
+
+4. **Daftar Item**:
+   - Buat model di Flutter dengan `Quicktype` berdasarkan models di Django.
+   - Buat endpoint JSON di Django untuk daftar item.Model Django dirancang untuk menyimpan data sesuai kebutuhan aplikasi, misalnya model `Item` dengan atribut seperti `name`, `price`, `description`, `stock`, dan `user`. 
+
+```python
+class Item(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.FloatField()
+    description = models.TextField()
+    stock = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+```
+
+   - Implementasikan halaman daftar item di Flutter.
+
+5. **Detail Item**:
+   - Tambahkan halaman detail di Flutter.
+   - Kirim data melalui routing dan tampilkan detail item.
+
+6. **Filter Berdasarkan Pengguna**:
+   - Tambahkan filter `user=request.user` di Django view `show_json`.
+
 ### Tugas 8
 
 ## 1. Kegunaan `const` di Flutter
