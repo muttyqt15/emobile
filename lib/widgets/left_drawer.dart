@@ -1,3 +1,4 @@
+import 'package:emobile/screens/list.dart';
 import 'package:flutter/material.dart';
 import 'package:emobile/screens/menu.dart';
 import 'package:emobile/screens/form.dart';
@@ -53,7 +54,19 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('Tambah Item'),
             // Bagian redirection ke FormPage
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => FormPage()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => FormPage()));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_reaction_rounded),
+            title: const Text('Daftar Produk'),
+            onTap: () {
+              // Route menu ke halaman produk
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProductPage()),
+              );
             },
           ),
         ],
