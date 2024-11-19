@@ -1,21 +1,27 @@
 # E-Mobile
+
 ### Tugas 9
 
 # README.md
 
 #### a. Mengapa Kita Perlu Membuat Model untuk Mengambil/Mengirim Data JSON?
+
 Model diperlukan untuk mendefinisikan struktur data secara eksplisit. Tanpa model, data tidak akan divalidasi, yang dapat menyebabkan error atau data yang tidak konsisten.
 
 #### b. Apakah Akan Terjadi Error Jika Tidak Membuat Model Terlebih Dahulu?
+
 Error mungkin tidak langsung terjadi, tetapi data yang tidak terstruktur dapat menyebabkan aplikasi menjadi tidak dapat digunakan karena tidak adanya validasi atau penyimpanan data yang sesuai.
 
 #### c. Fungsi Library `http`
+
 Library `http` digunakan untuk mengirimkan request HTTP ke server Django. Misalnya, library ini digunakan untuk mengambil daftar item, mengirimkan data registrasi, atau melakukan autentikasi login.
 
 #### d. Fungsi `CookieRequest`
+
 `CookieRequest` digunakan untuk menyimpan sesi pengguna, seperti cookie untuk autentikasi. Instance ini dibagikan ke semua komponen agar Flutter dapat mengakses status autentikasi pengguna dengan mudah.
 
 #### e. Mekanisme Pengiriman Data
+
 1. Pengguna memasukkan data di Flutter.
 2. Data dikirim melalui `http.post()` ke endpoint Django.
 3. Django memvalidasi data dan menyimpannya ke database.
@@ -23,29 +29,15 @@ Library `http` digunakan untuk mengirimkan request HTTP ke server Django. Misaln
 5. Flutter memproses respons dan menampilkan data ke pengguna.
 
 #### f. Mekanisme Autentikasi
+
 1. **Login**: Flutter mengirim email dan password ke endpoint Django. Jika valid, cookie sesi disimpan di Flutter.
 2. **Register**: Data pengguna dikirim ke endpoint registrasi Django untuk disimpan di database.
 3. **Logout**: Flutter mengirim permintaan logout ke Django, yang menghapus cookie sesi.
 
 #### g. Step-by-Step Implementasi
-### 5. Membuat Halaman Daftar Item
-Flutter menampilkan daftar item dengan memanfaatkan endpoint JSON Django. Data ditampilkan menggunakan `FutureBuilder` dan ditata dalam `GridView`. Atribut `name`, `price`, dan `description` ditampilkan pada setiap kartu item.
-
-### 6. Membuat Halaman Detail Item
-Setiap kartu pada halaman daftar item dapat ditekan untuk membuka halaman detail. Semua atribut dari model item ditampilkan di halaman ini. Tombol "Kembali" memungkinkan pengguna untuk kembali ke daftar item.
-
-### 7. Filter Item Berdasarkan Pengguna yang Login
-Halaman daftar item difilter untuk menampilkan hanya item yang dibuat oleh pengguna yang sedang login. Django menyaring data menggunakan `request.user`.
-
-```python
-def show_json(req):
-    data = Product.objects.filter(user=req.user)
-    return HttpResponse(
-        serializers.serialize("json", data), content_type="application/json"
-    )
-```
 
 1. **Registrasi Akun**:
+
    - Buat model pengguna di Django (bawaan Django).
    - Implementasikan endpoint registrasi `/auth/register/` di Django.
    - Tambahkan halaman registrasi `register.dart` di Flutter.
@@ -53,33 +45,27 @@ def show_json(req):
    Halaman registrasi akun dibuat menggunakan `TextFormField` untuk input data pengguna seperti nama, email, dan password. Data dikirimkan ke backend Django melalui endpoint API menggunakan library `http`. Django memvalidasi data dan menyimpan pengguna baru ke database.
 
 2. **Login**:
+
    - Implementasikan endpoint login `/auth/login` di Django.
    - Buat halaman login `login.dart` di Flutter.
 
    Halaman login menggunakan `TextFormField` untuk email dan password. Setelah pengguna mengisi data, aplikasi mengirimkan request ke endpoint login Django. Jika berhasil, aplikasi menyimpan session menggunakan `CookieRequest`.
 
 3. **Autentikasi dan Session**:
+
    - Gunakan `CookieRequest` untuk menyimpan sesi.
    - Tambahkan logika autentikasi di setiap halaman Flutter.
 
    Sistem autentikasi memanfaatkan Django untuk login, register, dan logout. Cookie disimpan di sisi klien menggunakan `CookieRequest`, memungkinkan autentikasi berbasis sesi di Flutter.
 
 4. **Daftar Item**:
+
    - Buat model di Flutter dengan `Quicktype` berdasarkan models di Django.
-   - Buat endpoint JSON di Django untuk daftar item.Model Django dirancang untuk menyimpan data sesuai kebutuhan aplikasi, misalnya model `Item` dengan atribut seperti `name`, `price`, `description`, `stock`, dan `user`. 
-
-```python
-class Item(models.Model):
-    name = models.CharField(max_length=100)
-    price = models.FloatField()
-    description = models.TextField()
-    stock = models.IntegerField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-```
-
+   - Buat endpoint JSON di Django untuk daftar item.
    - Implementasikan halaman daftar item di Flutter.
 
 5. **Detail Item**:
+
    - Tambahkan halaman detail di Flutter.
    - Kirim data melalui routing dan tampilkan detail item.
 
@@ -89,21 +75,26 @@ class Item(models.Model):
 ### Tugas 8
 
 ## 1. Kegunaan `const` di Flutter
+
 `const` digunakan dalam Flutter untuk membuat objek yang bersifat konstan atau immutable. Objek yang dideklarasikan dengan `const` tidak dapat diubah setelah diinisialisasi, sehingga dapat mempercepat performa aplikasi karena Flutter dapat menghindari rekonstruksi objek yang tidak berubah. Ini sangat berguna pada widget yang tidak berubah, seperti teks atau ikon statis.
 
 ### Keuntungan Menggunakan `const` pada Flutter
+
 - **Efisiensi Memori:** `const` membantu menghemat memori dengan menghindari pembuatan ulang objek yang sama berkali-kali.
 - **Optimasi Render:** Dengan menggunakan `const`, Flutter tidak perlu melakukan proses rebuild untuk elemen yang tidak berubah, sehingga mempercepat rendering.
 - **Membantu Pembacaan Kode:** Membuat kode lebih mudah dibaca dan dipahami karena nilai yang ditetapkan sebagai `const` menunjukkan bahwa nilai tersebut tidak akan berubah.
 
 ### Kapan Sebaiknya Menggunakan `const`
+
 - Gunakan `const` untuk widget atau nilai yang tidak akan berubah selama aplikasi berjalan, seperti `Text`, `Icon`, atau widget statis lainnya.
 - Untuk elemen yang tidak terpengaruh oleh data dinamis atau user input, `const` cocok digunakan.
 
 ### Kapan Sebaiknya Tidak Menggunakan `const`
+
 - Hindari `const` untuk elemen yang perlu memperbarui tampilan sesuai perubahan data atau state, karena elemen tersebut perlu di-render ulang.
 
 ## 2. Penggunaan `Column` dan `Row` di Flutter
+
 - **Column**: Widget ini digunakan untuk menampilkan widget secara vertikal (ke bawah). Biasa digunakan untuk membuat layout dengan elemen-elemen yang tersusun ke bawah.
 - **Row**: Widget ini digunakan untuk menampilkan widget secara horizontal (ke samping). Digunakan untuk menyusun elemen-elemen yang berjejer secara mendatar.
 
@@ -132,10 +123,13 @@ Row(
 ```
 
 ## 3. Elemen Input pada Halaman Form
+
 Pada tugas kali ini, elemen input yang digunakan adalah:
+
 - **TextField**: untuk input teks seperti nama atau alamat email.
 
 ### Elemen Input Flutter yang Tidak Digunakan
+
 - **Slider**: digunakan untuk memilih nilai dalam rentang tertentu.
 - **Switch**: untuk toggle antara dua opsi (misalnya on/off).
 - **DatePicker**: untuk memilih tanggal.
@@ -143,9 +137,11 @@ Pada tugas kali ini, elemen input yang digunakan adalah:
 Elemen-elemen ini tidak digunakan pada tugas ini karena tidak relevan dengan kebutuhan form yang dibuat.
 
 ## 4. Mengatur Tema (Theme) dalam Aplikasi Flutter
+
 Dalam Flutter, tema dapat diatur secara global dengan `ThemeData` di dalam `MaterialApp`. Ini membuat tampilan aplikasi lebih konsisten dengan warna, font, dan style yang seragam di seluruh aplikasi.
 
 ### Contoh Implementasi Tema
+
 ```dart
 MaterialApp(
   theme: ThemeData(
@@ -158,12 +154,15 @@ MaterialApp(
   home: MyHomePage(),
 );
 ```
+
 Tema memungkinkan komponen Flutter menggunakan style default dari `ThemeData` sehingga tampilan aplikasi menjadi konsisten. Pada aplikasi yang dibuat, tema ini dapat diterapkan untuk konsistensi warna, ukuran font, dan gaya komponen.
 
 ## 5. Menangani Navigasi dalam Aplikasi Flutter dengan Banyak Halaman
+
 Untuk menangani navigasi pada aplikasi dengan banyak halaman, Flutter menyediakan widget `Navigator` yang bekerja dengan metode `push` dan `pop`. Setiap kali kita ingin membuka halaman baru, kita bisa menggunakan `Navigator.push`, dan untuk kembali ke halaman sebelumnya menggunakan `Navigator.pop`.
 
 ### Contoh Navigasi
+
 ```dart
 // Navigasi ke halaman baru
 Navigator.push(
@@ -174,7 +173,6 @@ Navigator.push(
 // Kembali ke halaman sebelumnya
 Navigator.pop(context);
 ```
-
 
 ### Tugas 7
 
@@ -228,28 +226,35 @@ final DateTime waktuSekarang = DateTime.now(); // Nilai ditentukan saat runtime.
 ---
 
 ### Langkah 1: Mengimpor Paket yang Diperlukan
+
 ```dart
 import 'package:flutter/material.dart';
 ```
+
 Aplikasi ini menggunakan pustaka desain material Flutter untuk membuat elemen antarmuka pengguna (UI).
 
 ---
 
 ### Langkah 2: Mendefinisikan Kelas Utama `MyHomePage`
+
 Kelas ini adalah layar utama dari aplikasi.
 
 1. **Deklarasi Kelas**:
+
    ```dart
    class MyHomePage extends StatelessWidget {
    ```
+
    `MyHomePage` memperluas `StatelessWidget`, yang berarti bahwa widget ini tidak memiliki keadaan (state) yang berubah seiring waktu.
 
 2. **Mendefinisikan Informasi Pengguna Dasar**:
+
    ```dart
    final String npm = '2306207101';
    final String name = 'Muttaqin';
    final String pbp_class = 'PBP A';
    ```
+
    Variabel ini menyimpan informasi pengguna (NPM, Nama, dan Kelas) yang akan ditampilkan di halaman.
 
 3. **Membuat Daftar Item Aksi**:
@@ -265,6 +270,7 @@ Kelas ini adalah layar utama dari aplikasi.
 ---
 
 ### Langkah 3: Menyusun Tampilan Halaman di Metode `build`
+
 Metode `build` digunakan untuk membangun antarmuka pengguna dari halaman.
 
 1. **Struktur Dasar dengan Scaffold**:
@@ -327,6 +333,7 @@ Metode `build` digunakan untuk membangun antarmuka pengguna dari halaman.
 ---
 
 ### Langkah 4: Membuat Kelas `InfoCard`
+
 `InfoCard` adalah widget untuk menampilkan informasi pengguna (NPM, Name, Class) dalam bentuk kartu.
 
 ```dart
@@ -355,12 +362,14 @@ class InfoCard extends StatelessWidget {
   }
 }
 ```
+
 - **Attributes**: `title` dan `content`, yang masing-masing berisi judul dan isi kartu.
 - **UI**: Kartu berisi `title` dalam teks tebal dan `content` di bawahnya.
 
 ---
 
 ### Langkah 5: Membuat Kelas `ItemHomepage`
+
 `ItemHomepage` adalah model data untuk setiap kartu aksi.
 
 ```dart
@@ -368,10 +377,11 @@ class ItemHomepage {
   final String name;
   final IconData icon;
   final Color color;
-  
+
   ItemHomepage(this.name, this.icon, this.color);
 }
 ```
+
 - **Attributes**:
   - `name`: Nama aksi (misalnya, "Lihat Daftar Produk").
   - `icon`: Ikon untuk aksi tersebut.
@@ -380,6 +390,7 @@ class ItemHomepage {
 ---
 
 ### Langkah 6: Membuat Kelas `ItemCard`
+
 `ItemCard` adalah widget untuk menampilkan setiap item dalam grid kartu aksi.
 
 ```dart
@@ -419,6 +430,7 @@ class ItemCard extends StatelessWidget {
   }
 }
 ```
+
 - **Attributes**:
   - `item`: Objek `ItemHomepage` yang berisi data untuk kartu aksi.
 - **UI**:
@@ -426,7 +438,7 @@ class ItemCard extends StatelessWidget {
   - **Ikon & Teks**: Ikon berwarna putih di bagian tengah kartu dengan teks nama aksi di bawahnya.
   - **Aksi Ketuk (onTap)**: Saat ditekan, menampilkan `SnackBar` dengan pesan yang menyebutkan nama aksi.
 
---- 
+---
 
 A new Flutter project.
 
@@ -442,4 +454,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+```
+
 ```
