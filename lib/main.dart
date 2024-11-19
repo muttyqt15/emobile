@@ -1,3 +1,4 @@
+import 'package:emobile/screens/auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:emobile/screens/menu.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           ).copyWith(secondary: Colors.blue[400]),
           useMaterial3: true,
         ),
-        home: MyHomePage(),
+        home: LoginPage(),
       ),
     );
   }
