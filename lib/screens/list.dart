@@ -1,3 +1,4 @@
+import 'package:emobile/widgets/card.dart';
 import 'package:flutter/material.dart';
 import 'package:emobile/models/product.dart';
 import 'package:emobile/widgets/left_drawer.dart';
@@ -45,7 +46,8 @@ class _ProductPageState extends State<ProductPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
-                  Icon(Icons.shopping_bag_outlined, size: 80, color: Colors.grey),
+                  Icon(Icons.shopping_bag_outlined,
+                      size: 80, color: Colors.grey),
                   SizedBox(height: 16),
                   Text(
                     'No products available.',
@@ -67,65 +69,13 @@ class _ProductPageState extends State<ProductPage> {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (_, index) {
                   final product = snapshot.data![index];
-                  return ProductCard(product: product);
+                  return ProductCard(
+                      product: product); // Ensure 'product' parameter is passed
                 },
               ),
             );
           }
         },
-      ),
-    );
-  }
-}
-
-class ProductCard extends StatelessWidget {
-  final Product product;
-
-  const ProductCard({super.key, required this.product});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Center(
-                child: Icon(
-                  Icons.shopping_bag,
-                  size: 80,
-                  color: Colors.teal.shade200,
-                ), // Placeholder for product image
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              product.fields.name,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              "Price: \$${product.fields.price}",
-              style: const TextStyle(color: Colors.teal),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              "Stock: ${product.fields.stock}",
-              style: const TextStyle(color: Colors.grey),
-            ),
-          ],
-        ),
       ),
     );
   }
